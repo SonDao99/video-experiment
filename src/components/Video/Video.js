@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Plyr from "plyr-react";
 import "plyr-react/plyr.css";
 import "./style.css";
@@ -6,87 +6,76 @@ import indiaVideo from "../../india.mp4";
 
 
 function MyPlyrVideo() {
-  const plyrRef = useRef({plyr:{currentTime:0}});
-  const [time, setTime] = useState(0)
-
-  // const handleSeek = () => {
-  //   setTime(plyrRef.current.plyr.currentTime);
-  // }
+  const plyrRef = useRef();
 
   useEffect(() => {
     const progressBar = document.querySelector('video');
-    const milliseconds = document.querySelector('#video-ms');
+    const milliseconds = document.querySelector('.plyr__control.video-ms');
 
     progressBar.addEventListener('seeked', () => {
-      console.log(plyrRef.current.plyr);
-      console.log(plyrRef.current.plyr.currentTime);
-      //setTime(plyrRef.current.plyr.currentTime);
-      milliseconds.textContent = `${plyrRef.current.plyr.currentTime.toFixed(3)*1000} ms`
+      milliseconds.textContent = `
+        ${(plyrRef.current.plyr.currentTime.toFixed(3)*1000).toFixed(0)} ms
+      `;
     });
-    console.log('hi');
 
     return () => {
       progressBar.removeEventListener('seeked', () => {
-        console.log(plyrRef.current);
-        console.log(plyrRef.current.plyr.currentTime);
-        //setTime(plyrRef.current.plyr.currentTime);
+        milliseconds.textContent = `0 ms`;
       });
-      console.log('bye');
     }
   },[])
 
   const controls = `
     <div class="plyr__controls">
-      <div class="plyr__control" id="video-ms"></div>
-      <button type="button" class="plyr__control" data-plyr="restart">
-          <svg role="presentation"><use xlink:href="#plyr-restart"></use></svg>
-          <span class="plyr__tooltip" role="tooltip">Restart</span>
-      </button>
-      <button type="button" class="plyr__control" data-plyr="rewind">
-          <svg role="presentation"><use xlink:href="#plyr-rewind"></use></svg>
-          <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
-      </button>
-      <button type="button" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
-          <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-pause"></use></svg>
-          <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-play"></use></svg>
-          <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
-          <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
-      </button>
-      <button type="button" class="plyr__control" data-plyr="fast-forward">
-          <svg role="presentation"><use xlink:href="#plyr-fast-forward"></use></svg>
-          <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
-      </button>
-      <div class="plyr__progress">
+        <div class="plyr__control video-ms"></div>
+        <button type="button" class="plyr__control" data-plyr="restart">
+            <svg role="presentation"><use xlink:href="#plyr-restart"></use></svg>
+            <span class="plyr__tooltip" role="tooltip">Restart</span>
+        </button>
+        <button type="button" class="plyr__control" data-plyr="rewind">
+            <svg role="presentation"><use xlink:href="#plyr-rewind"></use></svg>
+            <span class="plyr__tooltip" role="tooltip">Rewind {seektime} secs</span>
+        </button>
+        <button type="button" class="plyr__control" aria-label="Play, {title}" data-plyr="play">
+            <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-pause"></use></svg>
+            <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-play"></use></svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Pause</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Play</span>
+        </button>
+        <button type="button" class="plyr__control" data-plyr="fast-forward">
+            <svg role="presentation"><use xlink:href="#plyr-fast-forward"></use></svg>
+            <span class="plyr__tooltip" role="tooltip">Forward {seektime} secs</span>
+        </button>
+        <div class="plyr__progress">
         <input data-plyr="seek" type="range" min="0" max="100" step="0.01" value="0" aria-label="Seek"/>
         <progress class="plyr__progress__buffer" min="0" max="100" value="0">% buffered</progress>
         <span role="tooltip" class="plyr__tooltip">00:00</span>
-      </div>
-      <div class="plyr__time plyr__time--current" aria-label="Current time">00:00</div>
-      <div class="plyr__time plyr__time--duration" aria-label="Duration">00:00</div>
-      <button type="button" class="plyr__control" aria-label="Mute" data-plyr="mute">
-          <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
-          <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
-          <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
-          <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
-      </button>
-      <div class="plyr__volume">
-          <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume"/>
-      </div>
-      <button type="button" class="plyr__control" data-plyr="captions">
-          <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-captions-on"></use></svg>
-          <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-captions-off"></use></svg>
-          <span class="label--pressed plyr__tooltip" role="tooltip">Disable captions</span>
-          <span class="label--not-pressed plyr__tooltip" role="tooltip">Enable captions</span>
-      </button>
-      <button type="button" class="plyr__control" data-plyr="fullscreen">
-          <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-exit-fullscreen"></use></svg>
-          <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-enter-fullscreen"></use></svg>
-          <span class="label--pressed plyr__tooltip" role="tooltip">Exit fullscreen</span>
-          <span class="label--not-pressed plyr__tooltip" role="tooltip">Enter fullscreen</span>
-      </button>
+        </div>
+        <div class="plyr__time plyr__time--current" aria-label="Current time">00:00</div>
+        <div class="plyr__time plyr__time--duration" aria-label="Duration">00:00</div>
+        <button type="button" class="plyr__control" aria-label="Mute" data-plyr="mute">
+            <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-muted"></use></svg>
+            <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-volume"></use></svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Unmute</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Mute</span>
+        </button>
+        <div class="plyr__volume">
+            <input data-plyr="volume" type="range" min="0" max="1" step="0.05" value="1" autocomplete="off" aria-label="Volume"/>
+        </div>
+        <button type="button" class="plyr__control" data-plyr="captions">
+            <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-captions-on"></use></svg>
+            <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-captions-off"></use></svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Disable captions</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enable captions</span>
+        </button>
+        <button type="button" class="plyr__control" data-plyr="fullscreen">
+            <svg class="icon--pressed" role="presentation"><use xlink:href="#plyr-exit-fullscreen"></use></svg>
+            <svg class="icon--not-pressed" role="presentation"><use xlink:href="#plyr-enter-fullscreen"></use></svg>
+            <span class="label--pressed plyr__tooltip" role="tooltip">Exit fullscreen</span>
+            <span class="label--not-pressed plyr__tooltip" role="tooltip">Enter fullscreen</span>
+        </button>
     </div>
   `;
-
 
   const plyrProps = {
     source: {
@@ -104,10 +93,7 @@ function MyPlyrVideo() {
   }
   
   return(
-    <Plyr 
-      {...plyrProps}
-      ref={plyrRef}
-    />
+    <Plyr {...plyrProps} ref={plyrRef} />
   )
 }
 
