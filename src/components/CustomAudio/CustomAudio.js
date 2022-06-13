@@ -89,13 +89,7 @@ const PlyrAudio = () => {
         if (current.plyr.source === null) return;
   
         const api = current;
-        // api.plyr.on("ready", () => console.log("I'm ready"));
-        // api.plyr.on("canplay", () => {
-        //   // NOTE: browser may pause you from doing so:  https://goo.gl/xX8pDD
-        //   api.plyr.play();
-        //   console.log("duration of audio is", api.plyr.duration);
-        // });
-        // api.plyr.on("ended", () => console.log("I'm Ended"));
+
         api.plyr.on("play", () => {
           const timeDiv = api.plyr.elements.controls.children[0];
           setTimeout(() => {timeDiv.textContent = ''}, 500);
