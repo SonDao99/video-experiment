@@ -78,13 +78,8 @@ const PlyrVideo = () => {
       const { source, options = null } = props;
       const raptorRef = usePlyr(ref, { options, source });
   
-      // Do all api access here, it is guaranteed to be called with the latest plyr instance
       React.useEffect(() => {
-        /**
-         * Fool react for using forward ref as normal ref
-         * NOTE: in a case you don't need the forward mechanism and handle everything via props
-         * you can create the ref inside the component by yourself
-         */
+
         const { current } = ref;
         if (current.plyr.source === null) return;
   
