@@ -1,7 +1,6 @@
 import React from "react";
 import { usePlyr } from "plyr-react";
 import "plyr-react/plyr.css";
-import indiaVideo from "../../india.mp4";
 import "./style.css";
 
 const controls = `
@@ -57,7 +56,7 @@ const controls = `
 `;
 
 
-const PlyrVideo = () => {
+const PlyrVideo = ({src}) => {
 
   const videoOptions = {
     controls: controls,
@@ -68,7 +67,7 @@ const PlyrVideo = () => {
     sources: [
       {
         type: "video/mp4",
-        src: indiaVideo,
+        src: src,
       },
     ],
   };

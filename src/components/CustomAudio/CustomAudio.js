@@ -1,7 +1,6 @@
 import React from "react";
 import { usePlyr } from "plyr-react";
 import "plyr-react/plyr.css";
-import inspirationAudio from "../../inspiration.mp3";
 import "./style.css";
 
 const controls = `
@@ -57,7 +56,7 @@ const controls = `
 `;
 
 
-const PlyrAudio = () => {
+const PlyrAudio = ({src}) => {
 
   const videoOptions = {
     controls: controls,
@@ -68,7 +67,7 @@ const PlyrAudio = () => {
     sources: [
       {
         type: "audio/mpeg",
-        src: inspirationAudio,
+        src: src,
       },
     ],
   };

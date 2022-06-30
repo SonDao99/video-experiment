@@ -3,11 +3,15 @@ import './App.css';
 import PlyrVideo from './components/CustomVideo/CustomVideo';
 import PlyrAudio from './components/CustomAudio/CustomAudio';
 
+import inspirationAudio from "./inspiration.mp3";
+import indiaVideo from "./india.mp4";
+
+
 function App() {
   return (
     <div className="App">
-      <PlyrVideo />
-      <PlyrAudio />
+      <PlyrVideo src={indiaVideo}/>
+      <PlyrAudio src={inspirationAudio}/>
     </div>
   );
 }
